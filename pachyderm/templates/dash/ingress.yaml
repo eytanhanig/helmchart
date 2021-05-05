@@ -1,10 +1,10 @@
-{{- if .Values.dash.url -}}
+{{- if .Values.dash.ingress.enabled -}}
 apiVersion: "networking.k8s.io/v1beta1"
 kind: "Ingress"
 metadata:
   name: "dash"
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
+  annotations: {{ toYaml .Values.dash.annotations | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: "dash"
     suite: "pachyderm"
@@ -12,7 +12,7 @@ spec:
   tls:
   - secretName: "dash-tls"
   rules:
-    - host: {{ .Values.dash.url | quote }}
+    - host: {{ required "dash.ingress.host is required when dash.ingress.enabled" .Values.dash.ingress.host | quote }}
       http:
         paths:
           - path: "/"

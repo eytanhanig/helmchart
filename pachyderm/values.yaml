@@ -24,8 +24,13 @@ dash:
     # tag is the image repo to pull from; together with repository it
     # replicates the --dash-image argument to pachctl deploy.
     tag: "0.5.57"
+  ingress:
+    enabled: false
+    annotations: {}
+    host: ""
+    #TODO Move TLS
   # resources specifies the resource request
-  resources: #Can't zero out resources with {}
+  resources: # To unset resources block, set this to null
     limits:
       cpu: "1"
       memory: "2G"
@@ -35,9 +40,6 @@ dash:
   service:
     # type specifies the Kubernetes type of the dash service.
     type: ClusterIP
-  # url specifies the URL of the dash ingress, used as the host value
-  # of a rule.
-  url: ""
 
 etcd:
   # dynamicNodes sets the number of nodes in the etcd StatefulSet.  It
