@@ -19,11 +19,11 @@ spec:
   strategy: {}
   template:
     metadata:
-      checksum/storage-secret: {{ include (print $.Template.BasePath "/pachd/storage-secret.yaml") . | sha256sum }}
-      {{- if .Values.pachd.storage.amazon.iamRole }}
       annotations:
+        checksum/storage-secret: {{ include (print $.Template.BasePath "/pachd/storage-secret.yaml") . | sha256sum }}
+        {{- if .Values.pachd.storage.amazon.iamRole }}
         iam.amazonaws.com/role: {{ .Values.pachd.storage.amazon.iamRole }}
-      {{- end }}
+        {{- end }}
       labels:
         app: pachd
         suite: pachyderm
